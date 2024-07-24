@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import StudentTable from './components/app/StudentTable.vue'
 </script>
 
 <template>
@@ -13,7 +14,7 @@ import { RouterLink, RouterView } from 'vue-router'
       </div>
       <div class="b3 d-flex flex-col min-h-100 f9">
         <div class="b4 f5 content-center"><h1>oui</h1></div>
-        <div class="b5 f5 content-center"><h1>Non</h1></div>
+        <StudentTable />
       </div>
     </div>
     <footer class="b4">
