@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { signIn } from '@/backend/UserAuth'
-import { useRouter } from 'vue-router'
+import { useRouter, RouterLink } from 'vue-router'
 
 const router = useRouter()
 const emailUser = ref<string>('')
@@ -27,7 +27,7 @@ async function handleSignIn() {
 }
 
 function goNext() {
-  router.push('/StudentsAndMails')
+  router.push('/Dashboard')
 }
 </script>
 

@@ -1,38 +1,166 @@
 <template>
-  <DataTable
-    v-model:filters="filters"
-    v-model:selection="selectedStudents"
-    removableSort
-    stripedRows
-    size="large"
-    :value="students"
-    dataKey="student_id"
-  >
-    <Column field="stu_first_name" header="First Name" sortable></Column>
-    <Column field="stu_last_name" header="Last Name" sortable></Column>
-    <Column field="stu_email" header="E-mail" sortable></Column>
-    <Column field="stu_sexe" header="Sex" sortable></Column>
-    <Column field="countries.name" header="Nationality" sortable></Column>
-    <Column field="stu_semester" header="Semester" sortable></Column>
-    <Column field="stu_study_level" header="Study Level" sortable></Column>
-    <Column field="stu_home_coordinator_email" header="HC - Email" sortable></Column>
-  </DataTable>
+  <div class="custom-card p-20">
+    <div class="mt-20">
+      <input
+        v-model="filters.global.value"
+        placeholder="Search students"
+        class="custom-input mb-20"
+      />
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>
+              <input type="checkbox" @change="toggleSelectAll" :checked="isAllSelected" />
+            </th>
+            <th @click="sortTable('stu_first_name')">First Name</th>
+            <th @click="sortTable('stu_last_name')">Last Name</th>
+            <th @click="sortTable('stu_email')">E-mail</th>
+            <th @click="sortTable('stu_sexe')">Sex</th>
+            <th @click="sortTable('countries.name')">Nationality</th>
+            <th @click="sortTable('stu_semester')">Semester</th>
+            <th @click="sortTable('stu_study_level')">Study Level</th>
+            <th @click="sortTable('stu_home_coordinator_email')">HC - Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="row in filteredRows" :key="row.student_id">
+            <td>
+              <input type="checkbox" :value="row.stu_email" v-model="selectedStudents" />
+            </td>
+            <td>{{ row.stu_first_name }}</td>
+            <td>{{ row.stu_last_name }}</td>
+            <td>{{ row.stu_email }}</td>
+            <td>{{ row.stu_sexe }}</td>
+            <td>{{ row.countries.name }}</td>
+            <td>{{ row.stu_semester }}</td>
+            <td>{{ row.stu_study_level }}</td>
+            <td>{{ row.stu_home_coordinator_email }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="selected-emails mt-20">
+        <ul>
+          <li v-for="email in selectedStudents" :key="email">{{ email }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useUserStore } from '@/stores/userStore'
-import DataTable from 'primevue/datatable'
-import Column from 'primevue/column'
 
 const userStore = useUserStore()
-userStore.saveUserToSession()
 userStore.loadUserFromSession()
-const students = userStore.studentsInSchool
+const students = ref(userStore.studentsInSchool)
 const selectedStudents = ref([])
+
 const filters = ref({
   global: { value: null, matchMode: 'contains' }
 })
+
+const columns = [
+  { label: 'First Name', field: 'stu_first_name' },
+  { label: 'Last Name', field: 'stu_last_name' },
+  { label: 'E-mail', field: 'stu_email' },
+  { label: 'Sex', field: 'stu_sexe' },
+  { label: 'Nationality', field: 'countries.name' },
+  { label: 'Semester', field: 'stu_semester' },
+  { label: 'Study Level', field: 'stu_study_level' },
+  { label: 'HC - Email', field: 'stu_home_coordinator_email' }
+]
+
+const filteredRows = computed(() => {
+  if (!filters.value.global.value) {
+    return students.value
+  }
+  const searchTerm = filters.value.global.value.toLowerCase()
+  return students.value.filter((student) =>
+    columns.some((column) => {
+      const fieldValue = String(student[column.field] || '').toLowerCase()
+      return fieldValue.includes(searchTerm)
+    })
+  )
+})
+
+const sortTable = (key) => {
+  students.value.sort((a, b) => {
+    if (a[key] < b[key]) return -1
+    if (a[key] > b[key]) return 1
+    return 0
+  })
+}
+
+const isAllSelected = computed(() => {
+  return (
+    filteredRows.value.length &&
+    filteredRows.value.every((row) => selectedStudents.value.includes(row.stu_email))
+  )
+})
+
+const toggleSelectAll = () => {
+  if (isAllSelected.value) {
+    selectedStudents.value = selectedStudents.value.filter(
+      (email) => !filteredRows.value.find((row) => row.stu_email === email)
+    )
+  } else {
+    filteredRows.value.forEach((row) => {
+      if (!selectedStudents.value.includes(row.stu_email)) {
+        selectedStudents.value.push(row.stu_email)
+      }
+    })
+  }
+}
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.custom-card {
+  background-color: var(--color-background-soft);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.custom-table th,
+.custom-table td {
+  border: 1px solid var(--color-border);
+  padding: 8px;
+  text-align: left;
+}
+
+.custom-table th {
+  background-color: var(--color-background-mute);
+  cursor: pointer;
+}
+
+.selected-emails {
+  margin-top: 20px;
+}
+
+.selected-emails ul {
+  list-style-type: none;
+  padding: 0;
+  font-size: 12px;
+  color: var(--text-light-2);
+}
+
+.selected-emails li {
+  background-color: var(--color-background-mute);
+  padding: 5px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+</style>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+<<<<<<< HEAD
 import { RouterLink, RouterView } from 'vue-router'
 <<<<<<< HEAD
 import StudentTable from './components/app/StudentTable.vue'
@@ -31,9 +32,16 @@ import supabaseAuther from './components/supabaseAuther.vue'
       <h2>je suis un pied</h2>
     </footer>
   </div>
+=======
+import { RouterView } from 'vue-router'
+</script>
+
+<template>
+  <RouterView />
+>>>>>>> 2a39e74 (datatable done)
 </template>
 
 <style lang="scss">
-@use '@/assets/style.scss';
-@use '@/assets/debug.scss';
+@use './assets/style.scss' as *;
+@use './assets/debug.scss' as *;
 </style>
