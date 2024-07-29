@@ -14,7 +14,11 @@
   },
   "dependencies": {
     "pinia": "^2.1.7",
+<<<<<<< HEAD
     "primevue": "^4.0.1",
+=======
+    "supabase": "^1.187.8",
+>>>>>>> 68b9a98 (importsupabase)
     "vue": "^3.4.29",
     "vue-good-table": "^2.21.11",
     "vue-router": "^4.3.3"
