@@ -5,8 +5,8 @@ import InputText from 'primevue/inputtext'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import VueGoodTablePlugin from 'vue-good-table'
 import 'vue-good-table/dist/vue-good-table.css'
+import CKEditor from '@ckeditor/ckeditor5-vue'
 
 import App from './App.vue'
 import router from './router'
@@ -20,6 +20,6 @@ app.use(PrimeVue, {
   unstyled: true
 })
 app.use(router)
-app.use(VueGoodTablePlugin)
+app.use(CKEditor)
 
 app.mount('#app')

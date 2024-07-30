@@ -1,11 +1,17 @@
 <template>
-  <div class="custom-card p-20">
+  <div class="p-10 main-block m-20">
     <div class="mt-20">
-      <input
-        v-model="filters.global.value"
-        placeholder="Search students"
-        class="custom-input mb-20"
-      />
+      <div class="d-flex flex-row">
+        <input
+          v-model="filters.global.value"
+          placeholder="Search students"
+          class="minimal-input mb-20 mr-20"
+        />
+        <div class="d-flex flex-row ml-auto">
+          <button class="clean-button mr-20">➕ add many students</button>
+          <button class="clean-button mr-20">➕ add one student</button>
+        </div>
+      </div>
       <table class="custom-table">
         <thead>
           <tr>
@@ -25,13 +31,18 @@
         <tbody>
           <tr v-for="row in filteredRows" :key="row.student_id">
             <td>
-              <input type="checkbox" :value="row.stu_email" v-model="selectedStudents" />
+              <input
+                type="checkbox"
+                :value="row.stu_email"
+                :checked="isSelected(row.stu_email)"
+                @change="toggleStudentSelection(row)"
+              />
             </td>
             <td>{{ row.stu_first_name }}</td>
             <td>{{ row.stu_last_name }}</td>
             <td>{{ row.stu_email }}</td>
             <td>{{ row.stu_sexe }}</td>
-            <td>{{ row.countries.name }}</td>
+            <td>{{ row.countries?.name }}</td>
             <td>{{ row.stu_semester }}</td>
             <td>{{ row.stu_study_level }}</td>
             <td>{{ row.stu_home_coordinator_email }}</td>
@@ -40,7 +51,7 @@
       </table>
       <div class="selected-emails mt-20">
         <ul>
-          <li v-for="email in selectedStudents" :key="email">{{ email }}</li>
+          <li v-for="email in mailStore.getSelectedEmails" :key="email">{{ email }}</li>
         </ul>
       </div>
     </div>
@@ -50,11 +61,14 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useUserStore } from '@/stores/userStore'
+import { useMailDestinationStore } from '@/stores/mailStore'
 
 const userStore = useUserStore()
+const mailStore = useMailDestinationStore()
+
 userStore.loadUserFromSession()
+
 const students = ref(userStore.studentsInSchool)
-const selectedStudents = ref([])
 
 const filters = ref({
   global: { value: null, matchMode: 'contains' }
@@ -84,7 +98,7 @@ const filteredRows = computed(() => {
   )
 })
 
-const sortTable = (key) => {
+const sortTable = (key: string) => {
   students.value.sort((a, b) => {
     if (a[key] < b[key]) return -1
     if (a[key] > b[key]) return 1
@@ -95,21 +109,33 @@ const sortTable = (key) => {
 const isAllSelected = computed(() => {
   return (
     filteredRows.value.length &&
-    filteredRows.value.every((row) => selectedStudents.value.includes(row.stu_email))
+    filteredRows.value.every((row) => mailStore.getSelectedEmails.includes(row.stu_email))
   )
 })
 
 const toggleSelectAll = () => {
   if (isAllSelected.value) {
-    selectedStudents.value = selectedStudents.value.filter(
-      (email) => !filteredRows.value.find((row) => row.stu_email === email)
-    )
+    filteredRows.value.forEach((row) => {
+      mailStore.removeStudentByEmail(row.stu_email)
+    })
   } else {
     filteredRows.value.forEach((row) => {
-      if (!selectedStudents.value.includes(row.stu_email)) {
-        selectedStudents.value.push(row.stu_email)
+      if (!mailStore.getSelectedEmails.includes(row.stu_email)) {
+        mailStore.addStudent(row.student_id, row.stu_email)
       }
     })
+  }
+}
+
+const isSelected = (email: string) => {
+  return mailStore.getSelectedEmails.includes(email)
+}
+
+const toggleStudentSelection = (row: any) => {
+  if (isSelected(row.stu_email)) {
+    mailStore.removeStudentByEmail(row.stu_email)
+  } else {
+    mailStore.addStudent(row.student_id, row.stu_email)
   }
 }
 </script>
