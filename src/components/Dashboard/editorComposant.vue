@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-col p-10 main-block m-20">
-    <h1>LiveHere Mail writer</h1>
+    <h1>2. Write informations you want to send</h1>
     <div>
       <input v-model="title" placeholder="Title" class="minimal-input m-40" />
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="p-10 main-block m-20">
-    <h1>Mail List</h1>
+    <h1>3. Check or remove mail list</h1>
     <div class="p-20 scrollable-container rtl">
       <div v-for="modality in modalitiesList" :key="modality.mod_id" class="content-center modality-block ltr">
         <div class="d-flex flex-row content-center">

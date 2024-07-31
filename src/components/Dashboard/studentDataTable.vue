@@ -1,5 +1,6 @@
 <template>
   <div class="p-10 main-block m-20">
+    <h1>1. Choose the students you want to send informaitons</h1>
     <div class="mt-20">
       <div class="d-flex flex-row">
         <input v-model="filters.global.value" placeholder="Search students" class="minimal-input mb-20 mr-20" />
