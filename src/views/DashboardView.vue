@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import studentDataTable from '@/components/studentDataTable.vue'
-import mailList from '@/components/mailList.vue'
-import editorComposant from '@/components/editorComposant.vue'
+import studentDataTable from '@/components/Dashboard/studentDataTable.vue'
+import mailList from '@/components/Dashboard/mailList.vue'
+import editorComposant from '@/components/Dashboard/editorComposant.vue'
+import HeaderComposant from '@/components/utils/HeaderComposant.vue'
+import NavBarComposant from '@/components/utils/NavBarComposant.vue'
 </script>
 
 <template>
   <div id="app">
-    <header class="b1">
-      <h1>salut</h1>
-    </header>
-    <div class="d-flex flex-row">
-      <div class="b3 f1 content-center">
-        <p>navbar</p>
+    <HeaderComposant />
+    <div class="d-flex flex-row p-50">
+      <div>
+        <NavBarComposant />
       </div>
-      <div class="d-flex flex-col min-h-100 f9">
+      <div class="d-flex flex-col min-h-100 p-20">
         <h1 class="m-20 max-w-500">🎓 Dashboard vue</h1>
         <p class="ml-20 mr-20">
           <strong style="font-weight: 700">Welcome to the Student Dashboard!</strong> To effectively
@@ -32,9 +32,6 @@ import editorComposant from '@/components/editorComposant.vue'
         </div>
       </div>
     </div>
-    <footer class="b4">
-      <h2>je suis un pied</h2>
-    </footer>
   </div>
 </template>
 

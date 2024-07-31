@@ -19,20 +19,10 @@ export const useMailDestinationStore = defineStore('mailDestination', {
     },
     clearSelectedStudents() {
       this.selectedStudents = []
-    },
-    addMultipleStudents(students: Mail[]) {
-      this.selectedStudents.push(...students)
-    },
-    removeAllStudents() {
-      this.selectedStudents = []
     }
   },
   getters: {
-    getSelectedUids: (state) => {
-      return state.selectedStudents.map(student => student.uid)
-    },
-    getSelectedEmails : (state) => {
-        return state.selectedStudents.map(student => student.email)
-    }
+    getSelectedUids: (state) => state.selectedStudents.map(student => student.uid),
+    getSelectedEmails: (state) => state.selectedStudents.map(student => student.email)
   }
 })

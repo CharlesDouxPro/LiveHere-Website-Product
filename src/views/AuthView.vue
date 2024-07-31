@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import supabaseAuther from '@/components/supabaseAuther.vue'
+import supabaseAuther from '@/components/Auth/supabaseAuther.vue'
 </script>
 
 <template>

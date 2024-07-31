@@ -1,6 +1,18 @@
 import { defineStore } from 'pinia'
-import type { User } from '@/interfaces/supabase.types'
 import { supabase } from '@/backend/supabase'
+
+interface User {
+  student_id: string
+  stu_first_name: string
+  stu_last_name: string
+  stu_email: string
+  stu_sexe: string
+  stu_university_id: number
+  stu_semester: string
+  stu_study_level: string
+  stu_home_coordinator_email: string
+  countries: { name: string }
+}
 
 interface UserInterface {
   userData: User[] | User
@@ -34,7 +46,7 @@ export const useUserStore = defineStore('user', {
         this.uid = user.id
         await this.getConnectedUser()
         await this.getStudentsSchool()
-        this.saveUserToSession() // Sauvegarder dans sessionStorage
+        this.saveUserToSession()
       }
     },
     async getConnectedUser() {
@@ -51,7 +63,7 @@ export const useUserStore = defineStore('user', {
       }
 
       if (data && data.length > 0) {
-        this.userData = data[0] // Transforme en objet
+        this.userData = data[0]
         const uniId = data[0].stu_university_id
         this.uniId = uniId ? Number(uniId) : null
       }

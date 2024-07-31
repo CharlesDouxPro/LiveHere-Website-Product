@@ -2,11 +2,7 @@
   <div class="p-10 main-block m-20">
     <div class="mt-20">
       <div class="d-flex flex-row">
-        <input
-          v-model="filters.global.value"
-          placeholder="Search students"
-          class="minimal-input mb-20 mr-20"
-        />
+        <input v-model="filters.global.value" placeholder="Search students" class="minimal-input mb-20 mr-20" />
         <div class="d-flex flex-row ml-auto">
           <button class="clean-button mr-20">➕ add many students</button>
           <button class="clean-button mr-20">➕ add one student</button>
@@ -31,12 +27,7 @@
         <tbody>
           <tr v-for="row in filteredRows" :key="row.student_id">
             <td>
-              <input
-                type="checkbox"
-                :value="row.stu_email"
-                :checked="isSelected(row.stu_email)"
-                @change="toggleStudentSelection(row)"
-              />
+              <input type="checkbox" :value="row.stu_email" :checked="isSelected(row.stu_email)" @change="toggleStudentSelection(row)" />
             </td>
             <td>{{ row.stu_first_name }}</td>
             <td>{{ row.stu_last_name }}</td>

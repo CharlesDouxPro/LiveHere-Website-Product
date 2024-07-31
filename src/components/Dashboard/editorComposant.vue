@@ -22,6 +22,7 @@
       </div>
     </div>
     <button @click="insertMail" class="clean-button ml-auto mt-20">✉️ Send Message</button>
+    <SuccessPopup v-if="isSent" message="The mail has been uploaded and sent on the app" />
     <div v-if="isEmpty" class="warning-bubble mt-30">
       <strong style="font-weight: 900">⚠️ Important Notice :</strong>
       To ensure that your explanations captivate and engage students, please use the editor to
@@ -29,9 +30,7 @@
       explanations are key to maintaining student interest and facilitating a deeper understanding
       of the material.
     </div>
-    <div v-if="isSent" class="warning-bubble mt-30">
-      <strong style="font-weight: 900">the mail has been uploaded and sent on the app</strong>
-    </div>
+    
   </div>
 </template>
 
@@ -39,6 +38,8 @@
 import 'ckeditor5/ckeditor5.css'
 import { supabase } from '@/backend/supabase'
 import {useUserStore} from '@/stores/userStore'
+import SuccessPopup from '@/components/utils/SuccessPopup.vue'
+
 import { useMailDestinationStore } from '@/stores/mailStore'
 import { ref, onMounted, watch } from 'vue'
 import {
@@ -92,16 +93,15 @@ import {
 const userStore = useUserStore()
 const mailStore = useMailDestinationStore()
 const isLayoutReady = ref(false)
-const config  : any = ref({}) // Initialisation avec un objet vide
+const config = ref({}) // Initialisation avec un objet vide
 const editor = InlineEditor
 const isEmpty = ref(true)
 const title = ref('')
 const isSent = ref(false)
 userStore.loadUserFromSession()
-const idsDestination = mailStore.getSelectedUids
+const idsDestination = ref(mailStore.getSelectedUids)
 
 async function insertMail() {
-  
   const { data, error } = await supabase
     .from('modalities')
     .insert([
@@ -109,16 +109,22 @@ async function insertMail() {
         mod_name: title.value,
         mod_description: config.value.initialData,
         mod_university_id: userStore.uniId,
-        mod_stu_destination: idsDestination
+        mod_stu_destination: idsDestination.value
       }
     ])
     .select()
+  
   if (error) {
     console.error(error)
   } else {
     console.log('sent')
-    config.value.initialData.value = config.value.placeholder.value
+    config.value.initialData = ''
+    title.value = ''
     mailStore.clearSelectedStudents()
+    isSent.value = true
+    setTimeout(() => {
+      isSent.value = false
+    }, 3000)
   }
 }
 
