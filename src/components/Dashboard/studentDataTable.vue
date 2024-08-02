@@ -100,7 +100,7 @@ const filteredRows = computed(() => {
   )
 })
 
-const sortTable = (key : string) => {
+const sortTable = (key: string) => {
   students.value.sort((a, b) => {
     if (a[key] < b[key]) return -1
     if (a[key] > b[key]) return 1
@@ -116,7 +116,7 @@ const isAllSelected = computed(() => {
 })
 
 const goNextMany = () => {
-  router.push("/CreateManyStudents")
+  router.push('/CreateManyStudents')
 }
 
 const toggleSelectAll = () => {

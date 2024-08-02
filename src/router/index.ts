@@ -3,12 +3,18 @@ import AuthView from '@/views/AuthView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import { supabase } from '@/backend/supabase'
 import CreateManyStudents from '@/views/CreateManyStudents.vue'
+import LandingPage from '@/views/LandingPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
+      name: 'LandingPage',
+      component: LandingPage
+    },
+    {
+      path: '/Auth',
       name: 'AuthView',
       component: AuthView
     },

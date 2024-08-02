@@ -29,17 +29,22 @@
         </div>
         <div class="form-group">
           <label for="stu_sexe">Sexe</label>
-          <input type="text" id="stu_sexe" v-model="formData.stu_sexe" />
+          <GenderSelector @updateGender="updateGender" />
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label for="stu_nationality_id">Nationality ID</label>
-          <input type="text" id="stu_nationality_id" v-model="formData.stu_nationality_id" />
+          <label for="stu_home_coordinator_email">Nationality</label>
+          <CountrySelector @updateNationality="updateNationality" />
         </div>
+
         <div class="form-group">
           <label for="stu_home_coordinator_email">Coordinator Email</label>
-          <input type="email" id="stu_home_coordinator_email" v-model="formData.stu_home_coordinator_email" />
+          <input
+            type="email"
+            id="stu_home_coordinator_email"
+            v-model="formData.stu_home_coordinator_email"
+          />
         </div>
       </div>
       <div class="form-row">
@@ -60,19 +65,24 @@
       </div>
       <button type="submit" class="clean-button mt-20">Ajouter</button>
     </form>
+    <ErrorPopup v-if="errorVisible" :message="errorMessage" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
-import { supabase } from '@/backend/supabase';
-import { useUserStore } from '@/stores/userStore';
-import { useRouter } from 'vue-router';
+import { reactive, ref } from 'vue'
+import { supabase } from '@/backend/supabase'
+import { useUserStore } from '@/stores/userStore'
+import { useRouter } from 'vue-router'
+import CountrySelector from './CountrySelector.vue'
+import GenderSelector from './GenderSelector.vue'
+import ErrorPopup from '../utils/ErrorPopup.vue'
 
 const router = useRouter()
 const userStore = useUserStore()
 
 userStore.loadUserFromSession()
+
 const formData = reactive({
   stu_university_id: '',
   stu_date_of_birth: '',
@@ -81,7 +91,7 @@ const formData = reactive({
   stu_last_name: '',
   stu_picture: '',
   student_id: '',
-  stu_nationality_id: '',
+  stu_nationality_id: 0,
   student__uni_com_id: '',
   created_at: '',
   stu_phone_number: '',
@@ -92,82 +102,82 @@ const formData = reactive({
   stu_study_level: '',
   stu_semester: '',
   stu_home_university: ''
-});
+})
 
-const fields = [
-  { name: 'stu_university_id', label: 'University ID', type: 'text' },
-  { name: 'stu_date_of_birth', label: 'Date of Birth', type: 'date' },
-  { name: 'stu_email', label: 'Email', type: 'email' },
-  { name: 'stu_first_name', label: 'First Name', type: 'text' },
-  { name: 'stu_last_name', label: 'Last Name', type: 'text' },
-  { name: 'stu_picture', label: 'Picture URL', type: 'text' },
-  { name: 'student_id', label: 'Student ID', type: 'text' },
-  { name: 'stu_nationality_id', label: 'Nationality ID', type: 'text' },
-  { name: 'student__uni_com_id', label: 'University Com ID', type: 'text' },
-  { name: 'created_at', label: 'Created At', type: 'datetime-local' },
-  { name: 'stu_phone_number', label: 'Phone Number', type: 'text' },
-  { name: 'user_role', label: 'User Role', type: 'text' },
-  { name: 'student_region_com_id', label: 'Region Com ID', type: 'text' },
-  { name: 'stu_sexe', label: 'Sexe', type: 'text' },
-  { name: 'stu_home_coordinator_email', label: 'Coordinator Email', type: 'email' },
-  { name: 'stu_study_level', label: 'Study Level', type: 'text' },
-  { name: 'stu_semester', label: 'Semester', type: 'text' },
-  { name: 'stu_home_university', label: 'Home University', type: 'text' }
-];
+const errorVisible = ref(false)
+const errorMessage = ref('')
+
+const updateGender = (gender: string) => {
+  formData.stu_sexe = gender
+}
+
+const updateNationality = (nationality_id: number) => {
+  formData.stu_nationality_id = nationality_id
+}
+
 function generatePassword(length = 12) {
-  const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const lowercase = 'abcdefghijklmnopqrstuvwxyz';
-  const numbers = '0123456789';
-  const specialChars = '!@#$%^&*()_+~`|}{[]:;?><,./-=';
-  const allChars = uppercase + lowercase + numbers + specialChars;
+  const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  const lowercase = 'abcdefghijklmnopqrstuvwxyz'
+  const numbers = '0123456789'
+  const specialChars = '!@#$%^&*()_+~`|}{[]:;?><,./-='
+  const allChars = uppercase + lowercase + numbers + specialChars
 
-  let password = '';
+  let password = ''
 
-  // Ensure the password contains at least one character from each character set
-  password += uppercase[Math.floor(Math.random() * uppercase.length)];
-  password += lowercase[Math.floor(Math.random() * lowercase.length)];
-  password += numbers[Math.floor(Math.random() * numbers.length)];
-  password += specialChars[Math.floor(Math.random() * specialChars.length)];
+  password += uppercase[Math.floor(Math.random() * uppercase.length)]
+  password += lowercase[Math.floor(Math.random() * lowercase.length)]
+  password += numbers[Math.floor(Math.random() * numbers.length)]
+  password += specialChars[Math.floor(Math.random() * specialChars.length)]
 
-  // Fill the rest of the password length with random characters
   for (let i = password.length; i < length; i++) {
-    password += allChars[Math.floor(Math.random() * allChars.length)];
+    password += allChars[Math.floor(Math.random() * allChars.length)]
   }
 
-  // Shuffle the password to ensure randomness
-  return password.split('').sort(() => Math.random() - 0.5).join('');
+  return password
+    .split('')
+    .sort(() => Math.random() - 0.5)
+    .join('')
 }
 
 async function submitForm() {
   let { data: SignUpUser, error } = await supabase.auth.signUp({
-  email: formData.stu_email,
-  password: generatePassword()
-})
-  if (error){
-    console.error("error for loggin")
-  }else {
-    const {data : InsertUser, error} = await supabase
-      .from('students')
-      .insert([
-        { stu_university_id: userStore.uniId},
-        { stu_date_of_birth: formData.stu_date_of_birth},
-        { stu_email: formData.stu_email},
-        { stu_first_name: formData.stu_first_name},
-        { stu_last_name: formData.stu_last_name},
-        { stu_picture:"https://plwisydqyvslmicabqpi.supabase.co/storage/v1/object/public/profilPic/default_profile_pic.jpg"},
-        { student_id: SignUpUser.user?.id},
-        { stu_nationality_id: formData.stu_nationality_id},
-        { student__uni_com_id: null},
-        { stu_phone_number: formData.stu_phone_number},
-        { user_role: 6 },
-        { student_region_com_id: null},
-        { stu_sexe: formData.stu_sexe },
-        { stu_home_coordinator_email: formData.stu_home_coordinator_email},
-        { stu_study_level: formData.stu_study_level },
-        { stu_semester: formData.stu_semester},
-        { stu_home_university: formData.stu_home_university },
-  ]).select()
-          
+    email: formData.stu_email,
+    password: generatePassword()
+  })
+
+  if (error) {
+    errorMessage.value = 'Error signing up: ' + error.message
+    errorVisible.value = true
+  } else {
+    const { data: InsertUser, error: insertError } = await supabase.from('students').insert({
+      stu_university_id: userStore.uniId,
+      stu_date_of_birth: formData.stu_date_of_birth,
+      stu_email: formData.stu_email,
+      stu_first_name: formData.stu_first_name,
+      stu_last_name: formData.stu_last_name,
+      stu_picture:
+        'https://plwisydqyvslmicabqpi.supabase.co/storage/v1/object/public/profilPic/default_profile_pic.jpg',
+      student_id: SignUpUser.user?.id,
+      stu_nationality_id: formData.stu_nationality_id,
+      student__uni_com_id: null,
+      stu_phone_number: formData.stu_phone_number,
+      user_role: 6,
+      student_region_com_id: null,
+      stu_sexe: formData.stu_sexe,
+      stu_home_coordinator_email: formData.stu_home_coordinator_email,
+      stu_study_level: formData.stu_study_level,
+      stu_semester: formData.stu_semester,
+      stu_home_university: formData.stu_home_university
+    })
+
+    if (insertError) {
+      errorMessage.value = 'Error inserting user: ' + insertError.message
+      errorVisible.value = true
+    } else {
+      userStore.initialize()
+      userStore.saveUserToSession()
+      router.push('/Dashboard')
+    }
   }
 }
 </script>
@@ -191,8 +201,6 @@ form {
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-
 
 .form-row {
   display: flex;
@@ -218,9 +226,6 @@ input {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-
-
-
 
 @media (max-width: 600px) {
   form {
