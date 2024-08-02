@@ -22,7 +22,7 @@ export const useMailDestinationStore = defineStore('mailDestination', {
     }
   },
   getters: {
-    getSelectedUids: (state) => state.selectedStudents.map(student => student.uid),
-    getSelectedEmails: (state) => state.selectedStudents.map(student => student.email)
+    getSelectedUids: (state) => state.selectedStudents.map((student) => student.uid),
+    getSelectedEmails: (state) => state.selectedStudents.map((student) => student.email)
   }
 })

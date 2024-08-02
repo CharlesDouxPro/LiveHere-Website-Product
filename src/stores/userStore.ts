@@ -12,6 +12,7 @@ interface User {
   stu_study_level: string
   stu_home_coordinator_email: string
   countries: { name: string }
+  stu_user_university : string
 }
 
 interface UserInterface {

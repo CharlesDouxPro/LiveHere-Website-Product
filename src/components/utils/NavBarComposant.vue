@@ -2,14 +2,12 @@
   <div class="container">
     <div :class="['drawer', { open: isOpen }]">
       <div class="header d-flex flex-row">
-        <img src="@/assets/icons/LogoBlack.png" alt="Logo" class="logo"/> 
-        <h1 style="font-weight: 800;">Live Here</h1>
+        <img src="@/assets/icons/LogoBlack.png" alt="Logo" class="logo" />
+        <h1 style="font-weight: 800">Live Here</h1>
       </div>
       <div class="content">
         <ul>
-          <li>
-            Communication
-          </li>
+          <li>Communication</li>
           <li>Events</li>
           <li>Informations</li>
         </ul>
@@ -26,26 +24,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref, defineProps, defineEmits } from 'vue'
 
 const props = defineProps({
   isOpen: {
     type: Boolean,
-    required: true,
-  },
-});
+    required: true
+  }
+})
 
-const emit = defineEmits(['toggleDrawer']);
+const emit = defineEmits(['toggleDrawer'])
 
-const userName = ref('John Doe');
+const userName = ref('John Doe')
 
 function toggleDrawer() {
-  emit('toggleDrawer');
+  emit('toggleDrawer')
 }
 
 function logout() {
   // Logic to handle logout
-  console.log('User logged out');
+  console.log('User logged out')
 }
 </script>
 

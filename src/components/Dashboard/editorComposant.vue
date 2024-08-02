@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-col p-10 main-block m-20">
-    <h1>2. Write informations you want to send</h1>
+    <h1>2. Write the information you want to send</h1>
     <div>
       <input v-model="title" placeholder="Title" class="minimal-input m-40" />
     </div>
@@ -30,14 +30,13 @@
       explanations are key to maintaining student interest and facilitating a deeper understanding
       of the material.
     </div>
-    
   </div>
 </template>
 
 <script setup lang="ts">
 import 'ckeditor5/ckeditor5.css'
 import { supabase } from '@/backend/supabase'
-import {useUserStore} from '@/stores/userStore'
+import { useUserStore } from '@/stores/userStore'
 import SuccessPopup from '@/components/utils/SuccessPopup.vue'
 
 import { useMailDestinationStore } from '@/stores/mailStore'
@@ -89,7 +88,6 @@ import {
   Undo
 } from 'ckeditor5'
 
-
 const userStore = useUserStore()
 const mailStore = useMailDestinationStore()
 const isLayoutReady = ref(false)
@@ -113,7 +111,7 @@ async function insertMail() {
       }
     ])
     .select()
-  
+
   if (error) {
     console.error(error)
   } else {
@@ -138,7 +136,6 @@ watch(
 
 onMounted(() => {
   config.value = {
-    
     toolbar: {
       items: [
         'undo',

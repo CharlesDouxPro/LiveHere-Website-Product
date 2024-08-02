@@ -1,12 +1,15 @@
 <template>
   <div class="p-10 main-block m-20">
-    <h1>1. Choose the students you want to send informaitons</h1>
+    <h1>1. Choose the students you want to send informations</h1>
     <div class="mt-20">
       <div class="d-flex flex-row">
-        <input v-model="filters.global.value" placeholder="Search students" class="minimal-input mb-20 mr-20" />
+        <input
+          v-model="filters.global.value"
+          placeholder="Search students"
+          class="minimal-input mb-20 mr-20"
+        />
         <div class="d-flex flex-row ml-auto">
-          <button class="clean-button mr-20">➕ add many students</button>
-          <button class="clean-button mr-20">➕ add one student</button>
+          <button class="clean-button" @click="goNextMany">➕ add a student</button>
         </div>
       </div>
       <table class="custom-table">
@@ -19,22 +22,27 @@
             <th @click="sortTable('stu_last_name')">Last Name</th>
             <th @click="sortTable('stu_email')">E-mail</th>
             <th @click="sortTable('stu_sexe')">Sex</th>
-            <th @click="sortTable('countries.name')">Nationality</th>
             <th @click="sortTable('stu_semester')">Semester</th>
             <th @click="sortTable('stu_study_level')">Study Level</th>
+            <th @click="sortTable('stu_home_university')">Home University</th>
             <th @click="sortTable('stu_home_coordinator_email')">HC - Email</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="row in filteredRows" :key="row.student_id">
             <td>
-              <input type="checkbox" :value="row.stu_email" :checked="isSelected(row.stu_email)" @change="toggleStudentSelection(row)" />
+              <input
+                type="checkbox"
+                :value="row.stu_email"
+                :checked="isSelected(row.stu_email)"
+                @change="toggleStudentSelection(row)"
+              />
             </td>
             <td>{{ row.stu_first_name }}</td>
             <td>{{ row.stu_last_name }}</td>
             <td>{{ row.stu_email }}</td>
             <td>{{ row.stu_sexe }}</td>
-            <td>{{ row.countries?.name }}</td>
+            <td>{{ row.stu_home_university }}</td>
             <td>{{ row.stu_semester }}</td>
             <td>{{ row.stu_study_level }}</td>
             <td>{{ row.stu_home_coordinator_email }}</td>
@@ -54,7 +62,9 @@
 import { ref, computed } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { useMailDestinationStore } from '@/stores/mailStore'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const userStore = useUserStore()
 const mailStore = useMailDestinationStore()
 
@@ -71,7 +81,7 @@ const columns = [
   { label: 'Last Name', field: 'stu_last_name' },
   { label: 'E-mail', field: 'stu_email' },
   { label: 'Sex', field: 'stu_sexe' },
-  { label: 'Nationality', field: 'countries.name' },
+  { label: 'Nationality', field: 'stu_home_university' },
   { label: 'Semester', field: 'stu_semester' },
   { label: 'Study Level', field: 'stu_study_level' },
   { label: 'HC - Email', field: 'stu_home_coordinator_email' }
@@ -90,7 +100,7 @@ const filteredRows = computed(() => {
   )
 })
 
-const sortTable = (key: string) => {
+const sortTable = (key : string) => {
   students.value.sort((a, b) => {
     if (a[key] < b[key]) return -1
     if (a[key] > b[key]) return 1
@@ -104,6 +114,10 @@ const isAllSelected = computed(() => {
     filteredRows.value.every((row) => mailStore.getSelectedEmails.includes(row.stu_email))
   )
 })
+
+const goNextMany = () => {
+  router.push("/CreateManyStudents")
+}
 
 const toggleSelectAll = () => {
   if (isAllSelected.value) {
