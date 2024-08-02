@@ -31,14 +31,14 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { supabase } from '@/backend/supabase'
 import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 
 const userStore = useUserStore()
 userStore.loadUserFromSession()
-const modalitiesList = ref<any[]>([])
+const modalitiesList = ref([])
 
 const getModalities = async () => {
   const { data: modalities, error } = await supabase
@@ -67,7 +67,7 @@ const getModalities = async () => {
   }
 }
 
-async function delModality(mod_id: number) {
+async function delModality(mod_id) {
   const { error } = await supabase.from('modalities').delete().eq('mod_id', mod_id)
   if (error) {
     console.error(error)

@@ -33,7 +33,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import 'ckeditor5/ckeditor5.css'
 import { supabase } from '@/backend/supabase'
 import { useUserStore } from '@/stores/userStore'

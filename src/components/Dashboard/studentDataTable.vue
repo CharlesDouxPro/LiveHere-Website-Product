@@ -58,7 +58,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup >
 import { ref, computed } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { useMailDestinationStore } from '@/stores/mailStore'
@@ -100,7 +100,7 @@ const filteredRows = computed(() => {
   )
 })
 
-const sortTable = (key: string) => {
+const sortTable = (key) => {
   students.value.sort((a, b) => {
     if (a[key] < b[key]) return -1
     if (a[key] > b[key]) return 1
@@ -133,11 +133,11 @@ const toggleSelectAll = () => {
   }
 }
 
-const isSelected = (email: string) => {
+const isSelected = (email) => {
   return mailStore.getSelectedEmails.includes(email)
 }
 
-const toggleStudentSelection = (row: any) => {
+const toggleStudentSelection = (row) => {
   if (isSelected(row.stu_email)) {
     mailStore.removeStudentByEmail(row.stu_email)
   } else {
