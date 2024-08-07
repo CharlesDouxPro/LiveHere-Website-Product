@@ -24,8 +24,12 @@
     "ckeditor5": "^42.0.2",
     "pinia": "^2.1.7",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "primevue": "^4.0.1",
 =======
+=======
+    "primevue": "^4.0.3",
+>>>>>>> 9beca64 (install primevue)
     "supabase": "^1.187.8",
 >>>>>>> 68b9a98 (importsupabase)
     "vue": "^3.4.29",
