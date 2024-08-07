@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+<<<<<<< HEAD
 import StudentTable from './components/app/StudentTable.vue'
+=======
+import studentDataTable from './components/studentDataTable.vue'
+import supabaseAuther from './components/supabaseAuther.vue'
+>>>>>>> b4d5381 (auth + tableau basique)
 </script>
 
 <template>
@@ -13,8 +18,13 @@ import StudentTable from './components/app/StudentTable.vue'
         <p>navbar</p>
       </div>
       <div class="b3 d-flex flex-col min-h-100 f9">
+<<<<<<< HEAD
         <div class="b4 f5 content-center"><h1>oui</h1></div>
         <StudentTable />
+=======
+        <div class="b4 f5 content-center"><supabaseAuther /></div>
+        <div class="b5 f5 content-center p-30"><studentDataTable /></div>
+>>>>>>> b4d5381 (auth + tableau basique)
       </div>
     </div>
     <footer class="b4">
