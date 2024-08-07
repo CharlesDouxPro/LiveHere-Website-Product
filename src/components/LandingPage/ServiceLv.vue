@@ -1,7 +1,7 @@
 <template>
   <section id="services">
     <div class="service-group content-center">
-    <div class = " d-flex flex-col max-w-500">
+    <div class = " d-flex flex-col max-w-500 content-Web">
       <h1>Site web pour les coordinateurs.</h1>
       <p> Notre site web aux fonctionalités imaginés avec des coordinateurs, permet l'intégration des informations et ressources ainsi que la gestion des étudiants avec un design
         épuré et simple.</p>
@@ -61,12 +61,12 @@ section {
   margin-left: 100px;
 }
 
-.contentWeb {
+.content-Web {
   z-index: 1;
   color: #333;
-  padding: 20px;
+  margin-right: 150px;
   max-width: 500px;
-  margin: 100px;
+
 }
 .contentApp {
   z-index: 1;

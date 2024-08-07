@@ -10,7 +10,7 @@ const errorMessage = ref('');
 const userStore = useUserStore()
 
 async function handleSignIn() {
-  const { data, error } = await signIn(emailUser.value, passwordUser.value)
+  const { data, error } = await signIn(email.value, password.value)
 
   if (error) {
     console.error('Login failed', error)
