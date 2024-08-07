@@ -1,7 +1,9 @@
 <template>
   <footer>
     <div class="social-media">
-      <a href="https://www.linkedin.com/in/charles-doux-5a49a3253/"><img src="@/assets/icons/linkedin-icon.png" alt="LinkedIn" /></a>
+      <a href="https://www.linkedin.com/in/charles-doux-5a49a3253/"
+        ><img src="@/assets/icons/linkedin-icon.png" alt="LinkedIn"
+      /></a>
     </div>
     <p>Mentions légales et politique de confidentialité</p>
     <p>© 2024 LiveHere. Tous droits réservés.</p>

@@ -1,6 +1,6 @@
 export function scrollToContact() {
-  const contactSection = document.querySelector('#contact');
+  const contactSection = document.querySelector('#contact')
   if (contactSection) {
-    contactSection.scrollIntoView({ behavior: 'smooth' });
+    contactSection.scrollIntoView({ behavior: 'smooth' })
   }
 }

@@ -4,12 +4,15 @@
       <img src="@/assets/icons/LogoBlack.png" alt="LiveHere Logo" />
     </div>
     <div class="content">
-      <p>Le seul service qui permet de centraliser les informations pour les étudiants étrangers, favorisant leur intégration</p>
+      <p>
+        Le seul service qui permet de centraliser les informations pour les étudiants étrangers,
+        favorisant leur intégration
+      </p>
       <button @click="scrollToContact">Découvrez Nos Offres</button>
     </div>
     <div class="video-wrapper">
       <video autoplay muted loop class="background-video">
-        <source src="@/assets/icons/back-video.mp4" type="video/mp4">
+        <source src="@/assets/icons/back-video.mp4" type="video/mp4" />
       </video>
     </div>
     <div class="title">
@@ -19,8 +22,8 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-import { scrollToContact } from './scrollToContacts';
+import { useRouter } from 'vue-router'
+import { scrollToContact } from './scrollToContacts'
 const router = useRouter()
 
 function goNext() {
@@ -37,11 +40,11 @@ function goNext() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-background-mute)
+  background-color: var(--color-background-mute);
 }
 
 .logo {
-  display: none; 
+  display: none;
 }
 
 .content {
@@ -115,7 +118,9 @@ button {
   font-size: 1.2em;
   border-radius: 50px;
   margin-top: 10px;
-  transition: background-color 0.3s, transform 0.3s;
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
 }
 
 button:hover {

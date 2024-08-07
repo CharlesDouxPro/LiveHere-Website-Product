@@ -58,7 +58,7 @@
   </div>
 </template>
 
-<script setup >
+<script setup>
 import { ref, computed } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { useMailDestinationStore } from '@/stores/mailStore'

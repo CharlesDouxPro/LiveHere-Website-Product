@@ -2,7 +2,7 @@
   <header class="navbar">
     <div class="logo d-flex flex-row content-center">
       <img src="@/assets/icons/LogoBlack.png" alt="LiveHere Logo" />
-      <h1 class="ml-10" style="font-weight: 700;">Live Here</h1>
+      <h1 class="ml-10" style="font-weight: 700">Live Here</h1>
     </div>
     <nav>
       <ul>
@@ -17,12 +17,12 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 
 function goNext() {
-  router.push('/Auth');
+  router.push('/Auth')
 }
 </script>
 

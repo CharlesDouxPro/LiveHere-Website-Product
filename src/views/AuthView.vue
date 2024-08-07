@@ -1,12 +1,12 @@
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { signIn } from '@/backend/UserAuth'
-const router = useRouter();
-const email = ref('');
-const password = ref('');
-const errorMessage = ref('');
+const router = useRouter()
+const email = ref('')
+const password = ref('')
+const errorMessage = ref('')
 const userStore = useUserStore()
 
 async function handleSignIn() {
@@ -121,7 +121,9 @@ input:focus {
   font-family: 'Lato', sans-serif;
   font-size: 1.2em;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
 }
 
 .login-button:hover {

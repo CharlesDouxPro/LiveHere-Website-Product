@@ -16,46 +16,42 @@
       </div>
       <input type="submit" value="Envoyer" />
     </form>
-    <div v-if="showSuccessMessage" class="success-message">
-      E-mail envoyé avec succès!
-    </div>
+    <div v-if="showSuccessMessage" class="success-message">E-mail envoyé avec succès!</div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { sendEmail } from '@/backend/emailServices';
+import { ref } from 'vue'
+import { sendEmail } from '@/backend/emailServices'
 
 const form = ref({
   user_name: '',
   user_email: '',
   message: ''
-});
+})
 
-const contactForm = ref<HTMLFormElement | null>(null);
-const showSuccessMessage = ref(false);
+const contactForm = ref<HTMLFormElement | null>(null)
+const showSuccessMessage = ref(false)
 
 const handleSubmit = () => {
   if (contactForm.value) {
     sendEmail(contactForm.value)
-      showSuccessMessage.value = true;
-      form.value = {
-        user_name: '',
-        user_email: '',
-        message: ''
-      };
-      setTimeout(() => {
-        showSuccessMessage.value = false;
-      }, 3000);
-
+    showSuccessMessage.value = true
+    form.value = {
+      user_name: '',
+      user_email: '',
+      message: ''
+    }
+    setTimeout(() => {
+      showSuccessMessage.value = false
+    }, 3000)
   }
-};
+}
 </script>
 
 <style scoped>
 section {
   padding: 60px 20px;
-
 }
 
 h1 {
@@ -82,24 +78,25 @@ form div {
   flex-direction: column;
 }
 
-input, textarea {
+input,
+textarea {
   border: 1px solid #ccc;
-  border-radius: 13px; 
+  border-radius: 13px;
   padding: 10px;
-  font-family: Helvetica, sans-serif; 
+  font-family: Helvetica, sans-serif;
 }
 
 textarea {
   height: 200px;
 }
 
-input[type="submit"] {
+input[type='submit'] {
   background-color: #1abc9c;
   border: none;
   padding: 10px 20px;
   color: #333;
   cursor: pointer;
-  border-radius: 20px; 
+  border-radius: 20px;
 }
 
 .success-message {
