@@ -3,6 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+RUN npm run format
 RUN npm run build
 
 # Étape 2 : Servir l'application avec un serveur nginx
