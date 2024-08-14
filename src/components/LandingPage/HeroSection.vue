@@ -5,8 +5,7 @@
     </div>
     <div class="content">
       <p>
-        Le seul service qui permet de centraliser les informations pour les étudiants étrangers,
-        favorisant leur intégration
+        Live Here permet aux coordinateurs internationaux des écoles d'envoyer plus facilement leurs informations aux étudiants étrangers. Grace à un dashboard web pour les coordinateurs et une applicaiton mobile pour les étudiants
       </p>
       <button @click="scrollToContact">Découvrez Nos Offres</button>
     </div>
@@ -16,7 +15,8 @@
       </video>
     </div>
     <div class="title">
-      <h1>Facilitez l'intégration des étudiants étrangers</h1>
+      <h1>Live Here</h1>
+      <h3>Facilitez l'intégration des étudiants étrangers</h3>
     </div>
   </section>
 </template>
@@ -72,11 +72,17 @@ function goNext() {
 h1 {
   max-width: 500px;
   font-size: 3em;
+  font-weight: 800;
+}
+h3{
+  max-width: 1000px;
+  font-size: 1.5em;
+  font-weight: 600;
 }
 
 p {
   margin: 20px 0;
-  font-size: 1.8em;
+  font-size: 1.4em;
   max-width: 1000px;
   text-align: left;
 }

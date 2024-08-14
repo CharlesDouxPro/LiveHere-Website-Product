@@ -42,9 +42,9 @@
             <td>{{ row.stu_last_name }}</td>
             <td>{{ row.stu_email }}</td>
             <td>{{ row.stu_sexe }}</td>
-            <td>{{ row.stu_home_university }}</td>
             <td>{{ row.stu_semester }}</td>
             <td>{{ row.stu_study_level }}</td>
+            <td>{{ row.stu_home_university }}</td>
             <td>{{ row.stu_home_coordinator_email }}</td>
           </tr>
         </tbody>
